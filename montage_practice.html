@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>몽타주 연습</title>
+  <style>
+    body {
+      background-color: rgb(29, 29, 29);
+      font-family: monospace;
+      padding: 20px;
+      overflow-x: auto;
+      color: rgb(196, 196, 196);
+    }
+    #container {
+      display: block;
+    }
+    .item {
+    border: 1px solid #f89f29;
+    padding: 10px;
+    background: #2c2c2c;
+    border-radius: 8px;
+    white-space: pre; /* 아스키 아트 줄바꿈 유지 */
+    font-family: 'Courier New', Courier, monospace; /* 아스키 아트 폰트 */
+    margin-bottom: 20px; /* 아이템 간 간격 */
+    width: max-content; /* 내용 크기만큼 넓이 조절 */
+    text-align: center;
+    }
+    .ascii {
+      font-size: 4pt;
+    white-space: pre;          /* 줄바꿈과 공백 모두 유지 */
+    font-family: 'Courier New', Courier, monospace;    /* 고정폭 글꼴 */
+    margin: 0;                 /* pre 기본 마진 제거 */
+    max-width: 100%;           /* 박스 안에 맞게 제한 */
+    }
+    button {
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      font-size: 16px
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="shuffleAndRender()">새로운 조합 보기</button>
+  <div id="container"></div>
+
+  <script>
+    const images = [
+      '1.jpg', '2.webp', '3.jpg',
+      '4.jpg', '5.jpeg', '6.jpg',
+      '7.jpeg', '8.jpg', '9.jpg'
+    ];
+
+    const texts = [
+      '아침', '창문', '추락',
+      '죽음', '힘', '꿈',
+      '빛', '우연', '고독'
+    ];
+
+    function shuffle(array) {
+      return array.map(value => ({ value, sort: Math.random() }))
+                  .sort((a, b) => a.sort - b.sort)
+                  .map(({ value }) => value);
+    }
+
+function shuffleAndRender() {
+  const shuffledimages = shuffle(images);
+  const shuffledTexts = shuffle(texts);
+
+  const container = document.getElementById('container');
+  container.innerHTML = '';
+
+  for (let i = 0; i < 9; i++) {
+    const div = document.createElement('div');
+    div.className = 'item';
+
+    const img = document.createElement('img');
+    img.src = shuffledimages[i];
+    img.alt = shuffledTexts[i];
+    img.style.maxWidth = '150px';
+    img.style.borderRadius = '8px';
+    img.style.filter = 'grayscale(100%)';
+
+    const text = document.createElement('p');
+    text.textContent = shuffledTexts[i];
+
+    div.appendChild(img);
+    div.appendChild(text);
+    container.appendChild(div);
+  }
+}
+
+
+    // 초기 렌더링
+    shuffleAndRender();
+  </script>
+
+</body>
+</html>
